@@ -7,8 +7,51 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>BizTone Converter</h1>
-    <p>업무 말투 변환기 - 프론트엔드 준비 중</p>
+    <div class="container">
+        <header>
+            <h1>BizTone Converter</h1>
+            <p>AI로 당신의 문장을 비즈니스에 맞게 변환하세요.</p>
+        </header>
+
+        <main class="main-container">
+            <div class="card">
+                <div class="card-header">
+                    <h2>원문 입력</h2>
+                    <span id="char-counter">0 / 500</span>
+                </div>
+                <textarea id="original-text" placeholder="여기에 변환할 텍스트를 입력하세요..."></textarea>
+                <div class="card-footer">
+                    <select id="target-audience">
+                        <option value="Upward">상사에게</option>
+                        <option value="Lateral">동료에게</option>
+                        <option value="External">고객에게</option>
+                    </select>
+                    <button id="convert-btn">변환하기</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>변환 결과</h2>
+                    <button id="copy-btn">복사하기</button>
+                </div>
+                <div id="converted-text" class="converted-text-placeholder">변환 결과가 여기에 표시됩니다.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>GitHub 리포지토리 생성</h2>
+                </div>
+                <div class="card-content">
+                    <input type="text" id="repo-name" placeholder="리포지토리 이름">
+                    <input type="text" id="repo-desc" placeholder="리포지토리 설명 (선택 사항)">
+                </div>
+                <div class="card-footer">
+                    <button id="create-repo-btn">생성하기</button>
+                </div>
+            </div>
+        </main>
+    </div>
     <script src="js/script.js"></script>
 </body>
 </html>
