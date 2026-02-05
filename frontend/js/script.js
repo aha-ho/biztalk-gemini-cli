@@ -7,15 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetAudienceSelect = document.getElementById('target-audience');
 
     const MAX_CHARS = 500;
+    const placeholderText = '변환 결과가 여기에 표시됩니다.';
 
     // Character counter
     originalTextInput.addEventListener('input', () => {
         const count = originalTextInput.value.length;
         charCounter.textContent = `${count} / ${MAX_CHARS}`;
         if (count > MAX_CHARS) {
-            charCounter.style.color = '#D0021B';
+            charCounter.classList.remove('text-gray-500');
+            charCounter.classList.add('text-red-600');
         } else {
-            charCounter.style.color = '#999';
+            charCounter.classList.add('text-gray-500');
+            charCounter.classList.remove('text-red-600');
         }
     });
 
@@ -36,8 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         convertBtn.disabled = true;
         convertBtn.textContent = '변환 중...';
-        convertedTextDiv.classList.remove('converted-text-placeholder');
         convertedTextDiv.textContent = 'AI가 문장을 다듬고 있습니다...';
+        convertedTextDiv.classList.remove('text-red-600');
+
 
         try {
             const response = await fetch('http://127.0.0.1:5000/api/convert', {
@@ -57,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             convertedTextDiv.textContent = `오류가 발생했습니다: ${error.message}`;
-            convertedTextDiv.style.color = '#D0021B';
+            convertedTextDiv.classList.add('text-red-600');
         } finally {
             convertBtn.disabled = false;
             convertBtn.textContent = '변환하기';
@@ -67,12 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Copy button click
     copyBtn.addEventListener('click', () => {
         const textToCopy = convertedTextDiv.textContent;
-        if (textToCopy && !convertedTextDiv.classList.contains('converted-text-placeholder')) {
+        if (textToCopy && textToCopy !== placeholderText && textToCopy !== 'AI가 문장을 다듬고 있습니다...') {
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const originalText = copyBtn.textContent;
                 copyBtn.textContent = '복사 완료!';
+                copyBtn.classList.add('bg-green-500', 'text-white');
                 setTimeout(() => {
                     copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('bg-green-500', 'text-white');
                 }, 2000);
             }).catch(err => {
                 console.error('복사 실패:', err);
